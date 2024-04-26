@@ -68,7 +68,7 @@
         <version.org.apache.qpid.qpid-jms-client>2.4.0</version.org.apache.qpid.qpid-jms-client>
         <version.org.postgresql.postgresql>42.6.1</version.org.postgresql.postgresql>
         <version.com.amazon.redshift.redshift-jdbc42>2.1.0.18</version.com.amazon.redshift.redshift-jdbc42>
-        <version.com.ibm.mq.com.ibm.mq.allclient>9.3.4.1</version.com.ibm.mq.com.ibm.mq.allclient>
+        <version.com.ibm.mq.com.ibm.mq.jakarta.client>9.3.4.1</version.com.ibm.mq.com.ibm.mq.jakarta.client>
     </properties>
 
     <developers>
@@ -290,7 +290,7 @@
                         "version.org.apache.qpid.qpid-jms-client": "${version.org.apache.qpid.qpid-jms-client}",
                         "version.org.postgresql.postgresql": "${version.org.postgresql.postgresql}",
                         "version.com.amazon.redshift.redshift-jdbc42": "${version.com.amazon.redshift.redshift-jdbc42}",
-                        "version.com.ibm.mq.com.ibm.mq.allclient": "${version.com.ibm.mq.com.ibm.mq.allclient}"
+                        "version.com.ibm.mq.com.ibm.mq.jakarta.client": "${version.com.ibm.mq.com.ibm.mq.jakarta.client}"
                     ])
                     </source>
                 </configuration>
