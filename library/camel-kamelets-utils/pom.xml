@@ -86,6 +86,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Dependencies for Gson serialization type adapter -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-gson</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Test scoped dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
