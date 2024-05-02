@@ -1,5 +1,5 @@
 apiVersion: camel.apache.org/v1
-kind: KameletBinding
+kind: Pipe
 metadata:
   name: salesforce-to-uri
 spec:

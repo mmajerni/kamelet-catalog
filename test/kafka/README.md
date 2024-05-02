@@ -5,9 +5,9 @@ and the Kamelet sink defined in [kafka-sink.kamelet.yaml](../../kafka-sink.kamel
 
 ## Objectives
 
-The test verifies the Kafka Kamelet source/sink by creating Kamelet bindings that use the source/sink to consume/produce 
+The test verifies the Kafka Kamelet source/sink by creating Pipes that use the source/sink to consume/produce 
 messages on a Kafka topic.
-The test itself produces/consumes messages on the topic to verify the Kamelet bindings and its source/sink.
+The test itself produces/consumes messages on the topic to verify the Pipes and its source/sink.
 
 ### Test Kamelet source
 
@@ -16,17 +16,17 @@ The Kafka Kamelet source binds topic messages to a test Http service in order to
 The test performs the following high level steps:
 
 *Preparation*
-- Create and start Http test service as a sink for the Kamelet binding
+- Create and start Http test service as a sink for the Pipe
 - Expose the service on a given target port
 
 *Scenario* 
-- Configure and create the Kamelet binding that uses the source (kafka-source to uri)
+- Configure and create the Pipe that uses the source (kafka-source to uri)
 - Wait for the Camel K integration to start
 - Send message to Kafka topic
 - Verify that the source binding has processed the Kafka message as expected by verifying the Http service sink request data
 
 *Cleanup*
-- Delete the Kamelet binding
+- Delete the Pipe
 - Delete the test Http service
 
 ### Test Kamelet sink
@@ -40,12 +40,12 @@ The test performs the following high level steps:
 - Connect to Kafka bootstrap servers
 
 *Scenario* 
-- Configure and create the Kamelet binding that uses the sink (timer-source to kafka)
+- Configure and create the Pipe that uses the sink (timer-source to kafka)
 - Wait for the Camel K integration to start
 - Receive and verify message on Kafka topic
 
 *Cleanup*
-- Delete the Kamelet binding
+- Delete the Pipe
 
 ## Installation
 

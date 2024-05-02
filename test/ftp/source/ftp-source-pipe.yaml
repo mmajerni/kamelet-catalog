@@ -1,7 +1,7 @@
 apiVersion: camel.apache.org/v1
-kind: KameletBinding
+kind: Pipe
 metadata:
-  name: ftp-source-test
+  name: ftp-source-pipe
 spec:
   source:
     ref:
@@ -16,5 +16,5 @@ spec:
       directoryName: ${directoryName}
       passiveMode: ${passiveMode}
   sink:
-    uri: http://ftp-to-http-service.${YAKS_NAMESPACE}/result
+    uri: yaks:resolveURL('ftp-to-http-service')/result
 

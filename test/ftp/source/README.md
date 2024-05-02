@@ -15,17 +15,17 @@ The test verifies the proper Http request and that the Ftp file content has been
 The test performs the following high level steps:
 
 *Preparation*
-- Create and start Http test service as a sink for the Kamelet binding
+- Create and start Http test service as a sink for the Pipe
 - Expose the service on a given target port
 
 *Scenario* 
-- Configure and create the Kamelet binding that uses the source (kafka-source to uri)
+- Configure and create the Pipe that uses the source (kafka-source to uri)
 - Wait for the Camel K integration to start
 - Provide proper file content on the FTP server instance
 - Verify that the binding has performed the Kamelet source as expected by verifying the Http service sink request data
 
 *Cleanup*
-- Delete the Kamelet binding
+- Delete the Pipe
 - Delete the test Http service
 
 ## Installation

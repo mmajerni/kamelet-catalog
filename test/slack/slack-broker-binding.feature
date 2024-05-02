@@ -8,12 +8,12 @@ Feature: Slack Kamelet
 
   Scenario: Verify Slack Kamelet to broker binding
     Given Kamelet slack-source is available
-    Given load KameletBinding broker-to-log.yaml
-    Given load KameletBinding slack-to-broker.yaml
+    Given load Pipe broker-to-log.yaml
+    Given load Pipe slack-to-broker.yaml
 
-    Then KameletBinding slack-to-broker should be available
+    Then Pipe slack-to-broker should be available
     And Camel K integration slack-to-broker should print kamelet://slack-source/source
-    And KameletBinding broker-to-log should be available
+    And Pipe broker-to-log should be available
     Given variable loginfo is "knative://event/custom-type"
     Then Camel K integration broker-to-log should print ${loginfo}
 
@@ -38,5 +38,5 @@ Feature: Slack Kamelet
     And Camel K integration broker-to-log should print ${message}
 
   Scenario: Remove Camel K resources
-    Given delete KameletBinding broker-to-log
-    Given delete KameletBinding slack-to-broker
+    Given delete Pipe broker-to-log
+    Given delete Pipe slack-to-broker

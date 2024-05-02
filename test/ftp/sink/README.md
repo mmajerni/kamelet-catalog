@@ -6,7 +6,7 @@ This test verifies the Kamelet sink defined in [ftp-sink.kamelet.yaml](../../ftp
 
 The test verifies the FTP Kamelet sink.
 The test provides an FTP server instance that the Kamelet can connect to.
-The test uses a timer-source that periodically provides static file content in a Kamelet binding.
+The test uses a timer-source that periodically provides static file content in a Pipe.
 The binding uses the FTP sink to send the file and its content to the FTP server instance.
 The test verifies the proper FTP file content on the server.
 
@@ -15,16 +15,16 @@ The test verifies the proper FTP file content on the server.
 The test performs the following high level steps:
 
 *Preparation*
-- Create and start Http test service as a sink for the Kamelet binding
+- Create and start Http test service as a sink for the Pipe
 - Expose the service on a given target port
 
 *Scenario*
-- Configure and create the Kamelet binding that uses the sink (kafka-sink to uri)
+- Configure and create the Pipe that uses the sink (kafka-sink to uri)
 - Wait for the Camel K integration to start
 - Verify that the binding has performed the content as expected by verifying the file content on the FTP server instance
 
 *Cleanup*
-- Delete the Kamelet binding
+- Delete the Pipe
 - Delete the test Http service
 
 ## Installation

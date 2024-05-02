@@ -5,7 +5,7 @@ and the Kamelet sink defined in [ftp-sink.kamelet.yaml](../../ftp-sink.kamelet.y
 
 ## Objectives
 
-The test verifies the FTP Kamelet source/sink by creating Kamelet bindings that use the source/sink to consume/produce 
+The test verifies the FTP Kamelet source/sink by creating Pipes that use the source/sink to consume/produce 
 files on a FTP server.
 The test itself provides a FTP server instance that can be used by the Kamelet source/sink.
 

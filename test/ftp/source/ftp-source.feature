@@ -19,18 +19,21 @@ Feature: FTP Kamelet source
     Given create Kubernetes service ftp-to-http-service with target port 8080
 
   Scenario: Create FTP server
+    Given HTTP server "ftp-server"
+    Given HTTP server listening on port 20021
     Given create Kubernetes service ftp-server with port mappings
     | 21    | 20021 |
     | 20022 | 20022 |
+    And stop HTTP server
     Given load endpoint ftp-server.groovy
 
-  Scenario: Create Kamelet binding
+  Scenario: Create Pipe
     Given Camel K resource polling configuration
       | maxAttempts          | 200   |
       | delayBetweenAttempts | 2000  |
-    When load KameletBinding ftp-source-test.yaml
-    Then Camel K integration ftp-source-test should be running
-    And Camel K integration ftp-source-test should print Routes startup summary
+    When load Pipe ftp-source-pipe.yaml
+    Then Camel K integration ftp-source-pipe should be running
+    And Camel K integration ftp-source-pipe should print Routes startup
 
   Scenario: Create FTP file
     Given sleep 5000 ms
@@ -42,6 +45,7 @@ Feature: FTP Kamelet source
     Then send HTTP 200 OK
 
   Scenario: Remove resources
-    Given delete KameletBinding ftp-source-test
+    Given delete Pipe ftp-source-pipe
     And delete Kubernetes service ftp-server
     And delete Kubernetes service ftp-to-http-service
+    And stop server component ftp-server

@@ -7,7 +7,7 @@ This test verifies the Jira Kamelet source defined in [jira-source.kamelet.yaml]
 The test verifies the jira-source Kamelet by creating a Camel K integration that uses the Kamelet and listens for new 
 Jira issue objects. It tests 3 Kamelet configuration types (property, URI, secret). 
 
-In jira-source test new issue object is passed to InMemoryChannel, which is bound to logger-sink Kamelet by KameletBinding.
+In jira-source test new issue object is passed to InMemoryChannel, which is bound to logger-sink Kamelet by Pipe.
 
 ### Test Kamelet
 
@@ -32,7 +32,7 @@ The test performs the following high level steps:
 - Test is run in temporary namespace, which is deleted with all remaining resources after test finished
 
 
-### Test KameletBinding (TBD)
+### Test Pipe (TBD)
 
 The test performs the following high level steps:
 
@@ -42,13 +42,13 @@ The test performs the following high level steps:
 - Create and label secret used by Yaks test
 - Create InMemoryChannel messages
 - Create logger-sink Kamelet
-- Create KameletBinding inmem-to-log, which binds InMemoryChannel messages to logger-sink Kamelet
+- Create Pipe inmem-to-log, which binds InMemoryChannel messages to logger-sink Kamelet
 - Create Camel K integration jira-to-inmem, which flows from jira-source Kamelet to InMemoryChannel messages (property 
 based configuration)
 
 *Scenario Verify resources* 
 - Verify that jira-source and logger-sink Kamelets are available
-- Verify that KameletBinding inmem-to-log is available
+- Verify that Pipe inmem-to-log is available
 - Verify that integration jira-to-inmem is running 
 
 *Scenario Verify new Jira issue is created* 
@@ -57,7 +57,7 @@ based configuration)
 - Verify the issue was logged by Camel K integration inmem-to-log  
 
 *Cleanup*
-- Test removes Camel K integrations, KameletBinding, secrets, InMemoryChannel 
+- Test removes Camel K integrations, Pipe, secrets, InMemoryChannel 
 - Test is run in temporary namespace, which is deleted with all remaining resources after test finished
 
 ## Installation

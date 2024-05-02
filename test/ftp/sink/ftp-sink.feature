@@ -14,17 +14,20 @@ Feature: FTP Kamelet sink
       | message             | Camel K rocks! |
 
   Scenario: Create FTP server
+    Given HTTP server "ftp-server"
+    Given HTTP server listening on port 20021
     Given create Kubernetes service ftp-server with port mappings
       | 21    | 20021 |
       | 20022 | 20022 |
+    And stop HTTP server
     Given load endpoint ftp-server.groovy
 
-  Scenario: Create Kamelet binding
+  Scenario: Create Pipe
     Given Camel K resource polling configuration
       | maxAttempts          | 200   |
       | delayBetweenAttempts | 2000  |
-    When load Kubernetes custom resource ftp-sink-test.yaml in kameletbindings.camel.apache.org
-    Then Camel K integration ftp-sink-test should be running
+    When load Pipe ftp-sink-pipe.yaml
+    Then Camel K integration ftp-sink-pipe should be running
 
   Scenario: Verify FTP file created
     When endpoint ftp-server receives body
@@ -45,5 +48,6 @@ Feature: FTP Kamelet sink
     Then receive Camel exchange from("file:~/ftp/user/admin?directoryMustExist=true&fileName=${file}") with body: ${message}
 
   Scenario: Remove resources
-    Given delete KameletBinding ftp-sink-test
+    Given delete Pipe ftp-sink-pipe
     And delete Kubernetes service ftp-server
+    And stop server component ftp-server

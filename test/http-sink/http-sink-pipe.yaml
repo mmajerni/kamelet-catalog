@@ -1,7 +1,7 @@
 apiVersion: camel.apache.org/v1
-kind: KameletBinding
+kind: Pipe
 metadata:
-  name: http-sink-test
+  name: http-sink-pipe
 spec:
   source:
     ref:
@@ -16,4 +16,4 @@ spec:
       apiVersion: camel.apache.org/v1
       name: http-sink
     properties:
-      url: http://sink-http-service.${YAKS_NAMESPACE}/result
+      url: yaks:resolveURL('sink-http-service')/result

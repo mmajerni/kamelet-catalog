@@ -1,4 +1,4 @@
-import com.consol.citrus.util.FileUtils
+import org.citrusframework.util.FileUtils
 import org.apache.ftpserver.DataConnectionConfigurationFactory
 import org.apache.ftpserver.listener.ListenerFactory
 

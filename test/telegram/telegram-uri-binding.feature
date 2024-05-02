@@ -9,7 +9,7 @@ Feature: Telegram Kamelet - binding to URI
 
   Scenario: Create Camel K resources
     Given Kamelet telegram-source is available
-    Given load KameletBinding telegram-uri-binding.yaml
+    Given load Pipe telegram-uri-binding.yaml
     Given Camel K integration telegram-uri-binding is running
     Given variable loginfo is "Installed features"
     Then Camel K integration telegram-uri-binding should print ${loginfo}
@@ -20,5 +20,5 @@ Feature: Telegram Kamelet - binding to URI
     And Camel K integration telegram-uri-binding should print "${message}"
 
   Scenario: Remove Camel K, Kubernetes resources
-    Given delete Camel K integration telegram-uri-binding
+    Given delete Pipe telegram-uri-binding
     Given delete Kubernetes resource telegram-client.yaml

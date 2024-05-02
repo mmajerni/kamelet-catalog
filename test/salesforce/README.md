@@ -28,7 +28,7 @@ The test performs the following high level steps:
 - Delete the Camel K integration
 - Delete the secret from the current namespacce
 
-### Test KameletBinding
+### Test Pipe
 
 The test performs the following high level steps:
 
@@ -40,14 +40,14 @@ The test performs the following high level steps:
 - Obtain an authorization token from Salesforce login
 - Obtain the account id for the Salesforce account
 - Create the Kamelet in the current namespace in the cluster
-- Create the KameletBinding that binds the Salesforce source to a Http URI
+- Create the Pipe that binds the Salesforce source to a Http URI
 - Create a new Http service that exposes the URI endpoint
 - Wait for services to start properly
 - Create a new Case object on the Salesforce API
 - Verify that the Http URI service endpoint has received the Case object event
 
 *Cleanup*
-- Delete the KameletBinding
+- Delete the Pipe
 - Delete the Http URI service endpoint
 - Delete the secret from the current namespacce
 

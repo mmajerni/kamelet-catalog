@@ -2,19 +2,19 @@ name: Publish Website
 on:
   push:
     branches:
-    - kamelet-catalog-1.4
-    - main
+      - main
+      - release-2.3.x
 jobs:
   publish-pages:
     runs-on: ubuntu-latest
     if: github.repository == 'openshift-integration/kamelet-catalog'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          ref: kamelet-catalog-1.4
+          ref: release-2.3.x
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Build

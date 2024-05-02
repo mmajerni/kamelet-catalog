@@ -14,10 +14,10 @@ Feature: AWS SQS Kamelet - binding to InMemoryChannel
       | aws.sqs.command    | "create-queue", "--queue-name", "${camel.kamelet.aws-sqs-source.aws-sqs-credentials.queueNameOrArn}" |
     When load Kubernetes resource aws-sqs-client.yaml
 
-    Given load KameletBinding aws-sqs-to-inmem.yaml
-    Given load KameletBinding inmem-to-log.yaml
-    Then KameletBinding aws-sqs-to-inmem is available
-    And KameletBinding inmem-to-log should be available
+    Given load Pipe aws-sqs-to-inmem.yaml
+    Given load Pipe inmem-to-log.yaml
+    Then Pipe aws-sqs-to-inmem is available
+    And Pipe inmem-to-log should be available
     Then Camel K integration aws-sqs-to-inmem is running
     And Camel K integration inmem-to-log is running
 
@@ -31,8 +31,8 @@ Feature: AWS SQS Kamelet - binding to InMemoryChannel
     Then Camel K integration inmem-to-log should print "${aws.sqs.message}"
 
   Scenario: Remove Camel K resources
-    Given delete KameletBinding aws-sqs-to-inmem
-    Given delete KameletBinding inmem-to-log
+    Given delete Pipe aws-sqs-to-inmem
+    Given delete Pipe inmem-to-log
 
   Scenario: Remove AWS SQS queue
     Given variables

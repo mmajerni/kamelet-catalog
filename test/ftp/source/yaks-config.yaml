@@ -26,9 +26,16 @@ config:
         value: false
       - name: CITRUS_TYPE_CONVERTER
         value: camel
+      - name: YAKS_JBANG_CAMEL_DUMP_INTEGRATION_OUTPUT
+        value: true
     settings:
+      loggers:
+        - name: INTEGRATION_STATUS
+          level: INFO
+        - name: INTEGRATION_LOGS
+          level: INFO
       dependencies:
-        - groupId: com.consol.citrus
+        - groupId: org.citrusframework
           artifactId: citrus-ftp
           version: "@citrus.version@"
         - groupId: org.apache.camel
@@ -37,7 +44,7 @@ config:
     resources:
       - ../ftp-server.groovy
       - ../ftp.server.properties
-      - ftp-source-test.yaml
+      - ftp-source-pipe.yaml
   dump:
     enabled: true
     failedOnly: true

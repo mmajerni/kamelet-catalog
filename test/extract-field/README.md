@@ -4,7 +4,7 @@ This test verifies the Kamelet action defined in [extract-field-action.kamelet.y
 
 ## Objectives
 
-The test verifies the extract field Kamelet action by creating a Kamelet binding that uses the action. 
+The test verifies the extract field Kamelet action by creating a Pipe that uses the action. 
 In the following the test provides a proper input to the binding and verifies the expected outcome on a Http service endpoint. 
 
 ### Test Kamelet action
@@ -12,16 +12,16 @@ In the following the test provides a proper input to the binding and verifies th
 The test performs the following high level steps:
 
 *Preparation*
-- Create and start Http test service as a sink for the Kamelet binding
+- Create and start Http test service as a sink for the Pipe
 - Expose the service on a given target port
 
 *Scenario* 
-- Configure and create the Kamelet binding that uses the action (timer-source to uri)
+- Configure and create the Pipe that uses the action (timer-source to uri)
 - Wait for the Camel K integration to start
 - Verify that the binding has performed the Kamelet action as expected by verifying the Http service sink request data
 
 *Cleanup*
-- Delete the Kamelet binding
+- Delete the Pipe
 - Delete the test Http service
 
 ## Installation

@@ -14,10 +14,10 @@ Feature: AWS-Kinesis Kamelet
       | aws.kinesis.command    | "create-stream", "--stream-name", "${camel.kamelet.aws-kinesis-source.aws-kinesis-credentials.stream}", "--shard-count", "1" |
     When load Kubernetes resource aws-kinesis-client.yaml
 
-    Given load KameletBinding aws-kinesis-to-inmem.yaml
-    Then KameletBinding aws-kinesis-to-inmem should be available
-    Given load KameletBinding inmem-to-log.yaml
-    And KameletBinding inmem-to-log should be available
+    Given load Pipe aws-kinesis-to-inmem.yaml
+    Then Pipe aws-kinesis-to-inmem should be available
+    Given load Pipe inmem-to-log.yaml
+    And Pipe inmem-to-log should be available
     And Camel K integration aws-kinesis-to-inmem is running
     And Camel K integration inmem-to-log is running
 
@@ -37,5 +37,5 @@ Feature: AWS-Kinesis Kamelet
       | aws.kinesis.clientName | aws-kinesis-client-citrus:randomString(10, LOWERCASE) |
       | aws.kinesis.command    | "delete-stream", "--stream-name", "${camel.kamelet.aws-kinesis-source.aws-kinesis-credentials.stream}" |
     Then load Kubernetes resource aws-kinesis-client.yaml
-    Given delete KameletBinding inmem-to-log
-    Given delete KameletBinding aws-kinesis-to-inmem
+    Given delete Pipe inmem-to-log
+    Given delete Pipe aws-kinesis-to-inmem

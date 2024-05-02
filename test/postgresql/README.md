@@ -4,14 +4,14 @@ This test verifies the Kamelet sink defined in [postgresql-sink.kamelet.yaml](..
 
 ## Objectives
 
-The test verifies the PostgreSQL Kamelet sink by creating Kamelet bindings that use the sink to insert 
+The test verifies the PostgreSQL Kamelet sink by creating Pipes that use the sink to insert 
 data on a PostgreSQL database.
 
-The test itself queries and validates the inserted data on the database in order to verify the Kamelet bindings and its sink.
+The test itself queries and validates the inserted data on the database in order to verify the Pipes and its sink.
 
 ### Test Kamelet sink
 
-The PostgreSQL Kamelet sink binds events to a database table as the sink outcome of a Kamelet binding.
+The PostgreSQL Kamelet sink binds events to a database table as the sink outcome of a Pipe.
 The test uses a timer-source in combination with the PostgreSQL Kamelet sink to periodically insert data into the database.
 
 The test performs the following high level steps:
@@ -21,12 +21,12 @@ The test performs the following high level steps:
 - Expose the database service on a given target port
 
 *Scenario* 
-- Configure and create the Kamelet binding that uses the sink (timer to postgresql sink)
+- Configure and create the Pipe that uses the sink (timer to postgresql sink)
 - Wait for the Camel K integration to start
 - Query the PostgreSQL database and verify the result set
 
 *Cleanup*
-- Delete the Kamelet binding
+- Delete the Pipe
 - Delete the PostgreSQL database
 
 ## Installation
