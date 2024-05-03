@@ -12,12 +12,12 @@ Feature: Kafka Kamelet sink
     Given Kafka topic: ${topic}
     Given Kafka topic partition: 0
 
-  Scenario: Create Kamelet binding
+  Scenario: Create Pipe
     Given Camel K resource polling configuration
       | maxAttempts          | 200   |
       | delayBetweenAttempts | 2000  |
-    When load KameletBinding kafka-sink-test.yaml
-    Then Camel K integration kafka-sink-test should be running
+    When load Pipe kafka-sink-pipe.yaml
+    Then Camel K integration kafka-sink-pipe should be running
 
   Scenario: Receive message on Kafka topic and verify sink output
     Given Kafka connection
@@ -25,4 +25,4 @@ Feature: Kafka Kamelet sink
     Then receive Kafka message with body: ${message}
 
   Scenario: Remove resources
-    Given delete KameletBinding kafka-sink-test
+    Given delete Pipe kafka-sink-pipe

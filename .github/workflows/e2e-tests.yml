@@ -15,29 +15,31 @@
 # limitations under the License.
 # ---------------------------------------------------------------------------
 
-name: Kubernetes
+name: E2E Tests
 
 on:
   pull_request:
     branches:
       - main
-      - kamelet-catalog-1.6
+      - release-2.3.x
   push:
     branches:
       - main
-      - kamelet-catalog-1.6
+      - release-2.3.x
 
 jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      YAKS_IMAGE_NAME: "docker.io/yaks/yaks"
-      YAKS_VERSION: "0.9.0-202202081449"
+      YAKS_IMAGE_NAME: "docker.io/citrusframework/yaks"
+      YAKS_VERSION: "0.19.1"
       YAKS_RUN_OPTIONS: "--timeout=15m"
       KUBECTL_WAIT_TIMEOUT: "180s"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Cleanup
         run: |
           ls -lart
@@ -56,41 +58,51 @@ jobs:
 
           echo "Final status:"
           df -h
-      - name: Set up JDK 11
-        uses: AdoptOpenJDK/install-jdk@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          version: "11"
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'maven'
       - name: Kind Cluster
-        uses: container-tools/kind-action@v1
+        uses: container-tools/kind-action@v2.0.4
         with:
-          version: v0.11.0
-          node_image: kindest/node:v1.21.1@sha256:fae9a58f17f18f06aeac9772ca8b5ac680ebbed985e266f711d936e91d113bad
+          version: v0.22.0
+          node_image: kindest/node:v1.29.2@sha256:51a1434a5397193442f0be2a297b488b6c919ce8a3931be0ce822606ea5ca245
+          cpu: 3
       - name: Info
         run: |
           kubectl version
           kubectl cluster-info
           kubectl describe nodes
       - name: Camel K Tools
-        uses: container-tools/camel-k-action@v1
+        uses: container-tools/camel-k-action@v1.0.3
         with:
-          version: v1.6.0
+          version: v2.3.0
+      - name: Set JitPack dependency coordinates
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          echo "Set JitPack dependency coordinates to ${HEAD_REPO/\//.}:camel-kamelets-utils:${HEAD_REF//\//'~'}-SNAPSHOT"
+
+          export PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+
+          # Overwrite JitPack coordinates in the local Kamelets so the tests can use the utility classes in this branch or PR
+          find . -maxdepth 1 -name '*.kamelet.yaml' -exec sed -i "s/mvn:org.apache.camel.kamelets:camel-kamelets-utils:${PROJECT_VERSION}/github:${HEAD_REPO/\//.}:camel-kamelets-utils:${HEAD_REF//\//'~'}-SNAPSHOT/g" {} +
       - name: Install Camel K
         run: |
           # Configure install options
-          export KAMEL_INSTALL_BUILD_PUBLISH_STRATEGY=Spectrum
           export KAMEL_INSTALL_REGISTRY=$KIND_REGISTRY
           export KAMEL_INSTALL_REGISTRY_INSECURE=true
 
-          kamel install -w
-          # TODO replaces the below statement with --operator-env-vars KAMEL_INSTALL_DEFAULT_KAMELETS=false
-          # when we use camel k 1.8.0
-          kubectl delete kamelets --all
+          kamel install --global --olm=false --operator-env-vars KAMEL_INSTALL_DEFAULT_KAMELETS=false -w
           # Install the local kamelets
           find . -maxdepth 1 -name '*.kamelet.yaml' -exec kubectl apply -f {} \;
       - name: YAKS tools
         uses: citrusframework/yaks-install-action@v1.0
         with:
-          version: ${{ env.YAKS_VERSION }}
+          version: v${{ env.YAKS_VERSION }}
       - name: Install YAKS
         run: |
           yaks install --operator-image $YAKS_IMAGE_NAME:$YAKS_VERSION

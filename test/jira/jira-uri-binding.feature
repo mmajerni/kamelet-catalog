@@ -6,8 +6,8 @@ Feature: Jira Kamelet - binding to URI
     Given Kamelet jira-source is available
 
   Scenario: Verify resources
-    Given load KameletBinding jira-uri-binding.yaml
-    Given KameletBinding jira-uri-binding is available
+    Given load Pipe jira-uri-binding.yaml
+    Given Pipe jira-uri-binding is available
     Given variable loginfo is "Installed features"
     Then Camel K integration jira-uri-binding should print ${loginfo}
 

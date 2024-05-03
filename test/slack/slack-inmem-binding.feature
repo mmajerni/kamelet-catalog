@@ -7,13 +7,13 @@ Feature: Slack Kamelet
 
   Scenario: Verify Slack Kamelet to InMemoryChannel binding
     Given Kamelet slack-source is available
-    Given load KameletBinding inmem-to-log.yaml
-    And KameletBinding inmem-to-log should be available
+    Given load Pipe inmem-to-log.yaml
+    And Pipe inmem-to-log should be available
     Given variable loginfo is "knative://channel/messages"
     Then Camel K integration inmem-to-log should print ${loginfo}
 
-    Given load KameletBinding slack-to-inmem.yaml
-    Then KameletBinding slack-to-inmem should be available
+    Given load Pipe slack-to-inmem.yaml
+    Then Pipe slack-to-inmem should be available
     And Camel K integration slack-to-inmem should print Installed features
 
     Given variable message is "Hello from Kamelet source citrus:randomString(10)"
@@ -32,6 +32,6 @@ Feature: Slack Kamelet
     And Camel K integration inmem-to-log should print ${message}
 
   Scenario: Remove Camel K resources
-    Given delete KameletBinding inmem-to-log
-    Given delete KameletBinding slack-to-inmem
+    Given delete Pipe inmem-to-log
+    Given delete Pipe slack-to-inmem
     #NOTE: InMemoryChannel is autoremoved

@@ -7,12 +7,12 @@ Feature: Salesforce Kamelet
 
   Scenario: Verify Kamelet source
     Given Kamelet salesforce-source is available
-    Given load KameletBinding salesforce-to-inmem.yaml
-    Given load KameletBinding inmem-to-log.yaml
-    Then KameletBinding salesforce-to-inmem should be available
+    Given load Pipe salesforce-to-inmem.yaml
+    Given load Pipe inmem-to-log.yaml
+    Then Pipe salesforce-to-inmem should be available
     And Camel K integration salesforce-to-inmem is running
 
-    And KameletBinding inmem-to-log should be available
+    And Pipe inmem-to-log should be available
     Given variable loginfo is "Installed features"
     Then Camel K integration salesforce-to-inmem should print ${loginfo}
     Then sleep 10000 ms
@@ -54,5 +54,5 @@ Feature: Salesforce Kamelet
     And Camel K integration inmem-to-log should print "Subject":"${subject}"
 
   Scenario: Remove Camel K resources
-    Given delete KameletBinding salesforce-to-broker
-    Given delete KameletBinding broker-to-log
+    Given delete Pipe salesforce-to-broker
+    Given delete Pipe broker-to-log

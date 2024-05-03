@@ -1,4 +1,4 @@
-Feature: Salesforce Kamelet binding
+Feature: Salesforce Pipe
 
   Background:
     Given Disable auto removal of Camel K resources
@@ -20,19 +20,19 @@ Feature: Salesforce Kamelet binding
     Then verify HTTP response expression: $.records[0].Id="@variable(account_id)@"
     And receive HTTP 200 OK
 
-  Scenario: Create KameletBinding
+  Scenario: Create Pipe
     Given variable query is "SELECT Id, Subject FROM Case"
     And variable topicName is "CamelTestTopic"
-    And load KameletBinding salesforce-to-uri.yaml
+    And load Pipe salesforce-to-uri.yaml
     Then Kamelet salesforce-source is available
-    And KameletBinding salesforce-to-uri is available
+    And Pipe salesforce-to-uri is available
 
   Scenario: Create Http service
     Given HTTP server "salesforce-case-service"
     Given HTTP server timeout is 15000 ms
     Given create Kubernetes service salesforce-case-service with target port 8080
 
-  Scenario: Verify Kamelet binding
+  Scenario: Verify Pipe
     Given variable subject is "Case regarding citrus:randomString(10)"
     Given variable description is "Test for Salesforce Kamelet source"
     Given Camel K integration salesforce-to-uri is running
@@ -59,6 +59,6 @@ Feature: Salesforce Kamelet binding
     """
     And receive POST /case
 
-  Scenario: Remove KameletBinding
-    Given delete KameletBinding salesforce-to-uri
+  Scenario: Remove Pipe
+    Given delete Pipe salesforce-to-uri
     And delete Kubernetes service salesforce-case-service

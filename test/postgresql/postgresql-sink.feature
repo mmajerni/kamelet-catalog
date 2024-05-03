@@ -13,7 +13,7 @@ Feature: PostgreSQL Kamelet sink
     """
     Then start PostgreSQL container
 
-  Scenario: Create and verify Kamelet binding
+  Scenario: Create and verify Pipe
     Given Database connection
       | driver    | ${YAKS_TESTCONTAINERS_POSTGRESQL_DRIVER} |
       | url       | ${YAKS_TESTCONTAINERS_POSTGRESQL_URL} |
@@ -23,11 +23,11 @@ Feature: PostgreSQL Kamelet sink
       | maxAttempts          | 200   |
       | delayBetweenAttempts | 2000  |
     Given SQL query max retry attempts: 10
-    When load KameletBinding postgresql-sink-test.yaml
-    Then Camel K integration postgresql-sink-test should be running
-    And Camel K integration postgresql-sink-test should print Started source (timer://tick)
+    When load Pipe postgresql-sink-pipe.yaml
+    Then Camel K integration postgresql-sink-pipe should be running
+    And Camel K integration postgresql-sink-pipe should print Started source (timer://tick)
     Then SQL query: SELECT headline FROM headlines WHERE ID=${id}
     And verify column HEADLINE=Camel K rocks!
 
   Scenario: Remove resources
-    Given delete KameletBinding postgresql-sink-test
+    Given delete Pipe postgresql-sink-pipe

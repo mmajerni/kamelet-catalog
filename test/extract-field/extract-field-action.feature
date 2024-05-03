@@ -15,34 +15,31 @@
 # limitations under the License.
 # ---------------------------------------------------------------------------
 
-config:
-  namespace:
-    temporary: false
-  runtime:
-    settings:
-      loggers:
-        - name: INTEGRATION_STATUS
-          level: INFO
-        - name: INTEGRATION_LOGS
-          level: INFO
-    resources:
-      - slack-to-log-uri-based.groovy
-      - slack-credentials.properties
-      - slack-uri-binding.yaml
-      - ../utils/inmem-to-log.yaml
-      - ../utils/broker-to-log.yaml
-      - slack-to-inmem.yaml
-      - slack-to-broker.yaml
-  dump:
-    enabled: true
-    failedOnly: true
-    includes:
-      - app=camel-k
-pre:
-  - name: Install Kamelets
-    run: |
-      kubectl delete kamelet slack-source -n $YAKS_NAMESPACE
-      kubectl apply -f ../../slack-source.kamelet.yaml -n $YAKS_NAMESPACE
-  - script: prepare-secret.sh
-post:
-  - script: delete-secret.sh
+Feature: Extract field Kamelet action
+
+  Background:
+    Given HTTP server timeout is 15000 ms
+    Given HTTP server "test-service"
+    Given variable field = "subject"
+
+  Scenario: Create Http server
+    Given create Kubernetes service test-service with target port 8080
+    Given purge endpoint test-service
+
+  Scenario: Create Pipe
+    Given variable input is
+    """
+    { "id": "citrus:randomUUID()", "${field}": "Camel K rocks!" }
+    """
+    When load Pipe extract-field-action-pipe.yaml
+    Then Camel K integration extract-field-action-pipe should be running
+    And Camel K integration extract-field-action-pipe should print Routes startup
+
+  Scenario: Verify output message sent
+    Given expect HTTP request body: "Camel K rocks!"
+    When receive POST /result
+    Then send HTTP 200 OK
+
+  Scenario: Remove resources
+    Given delete Pipe extract-field-action-pipe
+    And delete Kubernetes service test-service

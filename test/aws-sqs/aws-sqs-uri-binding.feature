@@ -14,8 +14,8 @@ Feature: AWS SQS Kamelet - binding to URI
 
   Scenario: Create Camel K resources
     Given Kamelet aws-sqs-source is available
-    Given load KameletBinding aws-sqs-uri-binding.yaml
-    Given KameletBinding aws-sqs-uri-binding is available
+    Given load Pipe aws-sqs-uri-binding.yaml
+    Given Pipe aws-sqs-uri-binding is available
     Given variable loginfo is "Installed features"
     Then Camel K integration aws-sqs-uri-binding should print ${loginfo}
 
@@ -27,7 +27,7 @@ Feature: AWS SQS Kamelet - binding to URI
     Then Camel K integration aws-sqs-uri-binding should print "${aws.sqs.message}"
 
   Scenario: Remove Camel K resources
-    Given delete KameletBinding aws-sqs-uri-binding
+    Given delete Pipe aws-sqs-uri-binding
     Given delete Camel K integration aws-sqs-uri-binding
 
   Scenario: Remove AWS SQS queue

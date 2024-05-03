@@ -1,7 +1,7 @@
 apiVersion: camel.apache.org/v1
-kind: KameletBinding
+kind: Pipe
 metadata:
-  name: kafka-source-test
+  name: kafka-source-pipe
 spec:
   source:
     ref:
@@ -16,5 +16,5 @@ spec:
       securityProtocol: ${securityProtocol}
       deserializeHeaders: ${deserializeHeaders}
   sink:
-    uri: http://kafka-to-http-service.${YAKS_NAMESPACE}/result
+    uri: yaks:resolveURL('kafka-to-http-service')/result
 

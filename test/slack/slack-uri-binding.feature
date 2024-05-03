@@ -5,8 +5,8 @@ Feature: Slack Kamelet - secret based configuration
     Given Disable auto removal of Kamelet resources
 
   Scenario: Create Camel K resources
-    Given load KameletBinding slack-uri-binding.yaml
-    Given KameletBinding slack-uri-binding is available
+    Given load Pipe slack-uri-binding.yaml
+    Given Pipe slack-uri-binding is available
     Given variable loginfo is "Installed features"
     Then Camel K integration slack-uri-binding should print ${loginfo}
 
@@ -27,4 +27,4 @@ Feature: Slack Kamelet - secret based configuration
     And Camel K integration slack-uri-binding should print ${message}
 
   Scenario: Remove Camel K resources  - secret based configuration
-    Given delete Camel K integration slack-uri-binding
+    Given delete Pipe slack-uri-binding

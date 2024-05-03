@@ -14,8 +14,8 @@ Feature: AWS Kinesis Kamelet - binding to URI
 
   Scenario: Create Camel K resources
     Given Kamelet aws-kinesis-source is available
-    Given load KameletBinding aws-kinesis-uri-binding.yaml
-    Given KameletBinding aws-kinesis-uri-binding is available
+    Given load Pipe aws-kinesis-uri-binding.yaml
+    Given Pipe aws-kinesis-uri-binding is available
     Given variable loginfo is "aws2-kinesis://${camel.kamelet.aws-kinesis-source.aws-kinesis-credentials.stream}"
     Then Camel K integration aws-kinesis-uri-binding should print ${loginfo}
 

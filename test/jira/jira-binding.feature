@@ -1,4 +1,4 @@
-Feature: Jira Kamelet Binding
+Feature: Jira Pipe
 
   Background:
     Given Disable auto removal of Kamelet resources
@@ -7,10 +7,10 @@ Feature: Jira Kamelet Binding
 
   Scenario: Verify resources
     Given Kamelet logger-sink is available
-    Given load KameletBinding jira-to-inmem.yaml
-    Given load KameletBinding inmem-to-log.yaml
-    Given KameletBinding jira-to-inmem is available
-    Given KameletBinding inmem-to-log is available
+    Given load Pipe jira-to-inmem.yaml
+    Given load Pipe inmem-to-log.yaml
+    Given Pipe jira-to-inmem is available
+    Given Pipe inmem-to-log is available
     Given variable loginfo is "knative://channel/messages"
     Then Camel K integration inmem-to-log should print ${loginfo}
 
@@ -48,5 +48,5 @@ Feature: Jira Kamelet Binding
   Scenario: Remove Camel K resources
     Given delete Camel K integration jira-to-inmem
     Given delete Camel K integration inmem-to-log
-    Given delete KameletBinding jira-to-inmem
-    Given delete KameletBinding inmem-to-log
+    Given delete Pipe jira-to-inmem
+    Given delete Pipe inmem-to-log
